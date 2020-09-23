@@ -23,7 +23,7 @@ router.post('/todos', (req, res, next) => {
     }
 })
 
-router.delete('/todos', (req, res, next) => {
+router.delete('/todos/:id', (req, res, next) => {
 
     Todo.findOneAndDelete({"_id": req.params.id})
         .then(data => res.json(data))

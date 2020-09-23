@@ -10,9 +10,14 @@ const app = express()
 const port = process.env.PORT || 5000
 
 // Connect to the database
-mongoose.connect(process.env.DB, {useNewUrlParser: true})
-    .then(() => console.log('Database connected successfully'))
-    .catch(err => console.log(err))
+mongoose.connect(process.env.DB, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+  useFindAndModify: false
+})
+  .then(() => console.log('Database connected successfully'))
+  .catch(err => console.log(err))
 
 // Since mongoose promise is depreciated, we overide it with node's promise
 mongoose.Promise = global.Promise
@@ -27,7 +32,7 @@ app.use(bodyParser.json())
 
 app.use('/api', routes)
 
-app.use((req, res, next) => {
+app.use((err, req, res, next) => {
   console.log(err)
   next()
 })
